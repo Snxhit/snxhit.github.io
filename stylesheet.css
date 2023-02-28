@@ -1,7 +1,36 @@
 body {
-    background-color: red;
+    background-color: rgb(3, 41, 110);
+    color: rgb(112, 255, 231);
+    outline: 3px;
+    -webkit-text-stroke-color: rgb(2, 116, 97);
+    -webkit-text-stroke-width: 0.75px;
 }
 
-h1 {
-     background-color: green;
+a {
+    color:rgb(112, 255, 231);
+    outline: 3px;
+    -webkit-text-stroke-color: rgb(2, 116, 97);
 }
+
+.titleText {
+    outline-style: groove;
+    outline-color: green;
+    outline-width: 5px;
+    outline-offset: 1px;
+    text-align: center;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+.listItems {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.picture {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
