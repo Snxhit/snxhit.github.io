@@ -1,9 +1,12 @@
 <!--Practice blog about Sloths made in purely HTML 4 [Outdated asf.]-->
-<html><head>
+
+<html>
+    <head>
         <title>
             Slothinger
         </title>
         <link rel="stylesheet" href="stylesheet.css">
+        <script src="script.js"></script>
     </head>
     <body>
         <h1 class="titleText">
@@ -14,6 +17,7 @@
             </big>
         </h1>
         <hr width="30%">
+        <div class="whySlothsCool">
         <p>
             <big>
             <b> 
@@ -32,8 +36,23 @@
                 They look like Koalas!
             </li>
         </ul>
-<!-- when wamogus -->
-        <a class="picture" href="https://www.google.com/search?q=Sloths&amp;rlz=1C1CHBF_enIN1003IN1003&amp;oq=Sloths&amp;aqs=chrome..69i57j0i131i433i512j0i433i512l2j0i512l2j69i61j69i60.722j0j7&amp;sourceid=chrome&amp;ie=UTF-8" target="_blank"><img src="https://image.shutterstock.com/image-photo/happy-sloth-hanging-tree-costa-260nw-1869906031.jpg" alt="This is a koala hanging onto a tree. Really cute!" height="40%" width="30%" border="2px"></a>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <p class="slothJumpText">
+            # Help the Sloth do a jump-
+        </p>
+        <button class="theSlothsButtons1" id="jumpButton" onclick="jumpTheSloth()">
+            ‎ ‎Jump the Sloth!‎ ‎
+        </button>
+        <img class="theSloths" id="myImage" src="https://www.shutterstock.com/image-vector/sloth-stands-yoga-pose-color-260nw-1948801135.jpg">
+        <button class="theSlothsButtons2" id="unjumpButton" onclick="unjumpTheSloth()" disabled>
+            Unjump the Sloth!
+        </button>
+        <p id="counter" class="slothJumpCounter">
+            Jump Counter - 0
+        </p>
         <br>
         <hr>
         <h3 align="center">
@@ -146,12 +165,16 @@
             <input type="text" name="Please put your email address here!"><br>
             <input type="text" name="Please put your phone number here!"><br>
             <textarea type="text" name="Please submit a message!"></textarea><br>
-            <input type="submit" name="submit!" <="" form="">
+            <input onclick="nerd()" type="submit" name="submit!" <="" form="">
+        </form>
+        <p align="center" id="nerd">
+            ‎ ‎
+        </p>
         <p align="right">
             Thanks!
             <sup>
                 I really love sloths!
             </sup>
         </p>
-    
-</form></body></html>
+    </body>
+</html>
