@@ -27,6 +27,7 @@ function jumpTheSloth() {
               console.error(err);
               return;
           }
+          document.getElementById("highscore").textContent = "All time high score - " + jumpHighScore;
 }
 
 function unjumpTheSloth() {
