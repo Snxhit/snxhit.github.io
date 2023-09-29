@@ -1,7 +1,15 @@
+const fs = require('fs');
 var theJumpSloth = "https://illustoon.com/photo/6985.png";
 var theStandSloth = "https://www.shutterstock.com/image-vector/sloth-stands-yoga-pose-color-260nw-1948801135.jpg"
 var jumpCount = 0;
 
+fs.readFile('data.txt', 'utf8', (err, data) => {
+    if (err) {
+        return;
+    }
+
+    var jumpHighScore = parseInt(data);
+});
 
 function jumpTheSloth() {
   let image = document.getElementById("myImage");
@@ -13,6 +21,12 @@ function jumpTheSloth() {
   document.getElementById("counter").textContent = "Jump Counter - " + jumpCount;
   document.getElementById("jumpButton").disabled = true;
   document.getElementById("unjumpButton").disabled = false;
+  if (jumpCount>jumpHighScore) {
+    fs.writeFile('data.txt', jumpCount.toString(), 'utf8', (err) => {
+          if (err) {
+              console.error(err);
+              return;
+          }
 }
 
 function unjumpTheSloth() {
