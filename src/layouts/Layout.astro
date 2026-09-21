@@ -1,0 +1,152 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Developer Portfolio" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Modern systems and graphics portfolio." />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const storedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+        const useLight = storedTheme ? storedTheme === "light" : prefersLight;
+        document.documentElement.classList.toggle("light", useLight);
+      })();
+    </script>
+  </head>
+  <body class="relative min-h-screen">
+    <div
+      class="fixed inset-0 -z-20 bg-cover bg-center bg-no-repeat"
+      style="background-image: url('/images/background.jpg');"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="fixed inset-0 -z-10 glass-dark transition-colors duration-300"
+      data-theme-overlay
+      aria-hidden="true"
+    ></div>
+
+    <header
+      class="fixed inset-x-0 top-0 z-50 border-b border-zinc-800/80 glass-dark transition-colors duration-300"
+      data-theme-nav
+    >
+      <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
+        <a href="/" class="inline-flex items-center" aria-label="Snxhit home">
+          <span
+            data-theme-logo
+            class="inline-flex items-center justify-center rounded-lg px-2 py-1 transition-colors duration-300"
+          >
+            <img src="/images/name-logo.png" alt="Name logo" class="h-8 w-auto sm:h-9" />
+          </span>
+        </a>
+
+        <div class="flex items-center gap-2.5 sm:gap-6">
+          <a class="text-xs sm:text-sm font-medium text-zinc-300 hover:text-emerald-400 transition-colors" href="/">Home</a>
+          <a class="text-xs sm:text-sm font-medium text-zinc-300 hover:text-emerald-400 transition-colors" href="/#projects">Projects</a>
+          <a class="text-xs sm:text-sm font-medium text-zinc-300 hover:text-emerald-400 transition-colors" href="/about">About</a>
+          <a
+            class="text-xs sm:text-sm font-medium text-zinc-300 hover:text-emerald-400 transition-colors"
+            href="https://github.com/Snxhit"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="hidden sm:inline">GitHub</span>
+            <span class="sm:hidden font-mono">gh↗</span>
+          </a>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-zinc-700 bg-zinc-900/80 text-zinc-200 hover:border-zinc-500 hover:text-emerald-400 transition-colors"
+            aria-label="Toggle theme"
+          >
+            <svg
+              data-theme-icon="dark"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              class="h-4 w-4"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 1 0 9.8 9.8Z" />
+            </svg>
+            <svg
+              data-theme-icon="light"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              class="hidden h-4 w-4"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path stroke-linecap="round" d="M12 2.5v2.2M12 19.3v2.2M21.5 12h-2.2M4.7 12H2.5M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6M18.7 18.7l-1.6-1.6M6.9 6.9 5.3 5.3" />
+            </svg>
+            <span class="sr-only">Toggle theme</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="mx-auto w-full max-w-6xl px-4 pb-16 pt-24 sm:px-6">
+      <slot />
+    </main>
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const toggle = document.querySelector("#theme-toggle");
+        const overlay = document.querySelector("[data-theme-overlay]");
+        const nav = document.querySelector("[data-theme-nav]");
+        const darkIcon = document.querySelector('[data-theme-icon="dark"]');
+        const lightIcon = document.querySelector('[data-theme-icon="light"]');
+
+        const paint = () => {
+          const isLight = root.classList.contains("light");
+
+          overlay?.classList.toggle("glass-dark", !isLight);
+          overlay?.classList.toggle("glass-light", isLight);
+
+          nav?.classList.toggle("glass-dark", !isLight);
+          nav?.classList.toggle("glass-light", isLight);
+          nav?.classList.toggle("border-zinc-800/80", !isLight);
+          nav?.classList.toggle("border-zinc-300/80", isLight);
+
+          if (toggle) {
+            toggle.classList.toggle("border-zinc-700", !isLight);
+            toggle.classList.toggle("bg-zinc-900/80", !isLight);
+            toggle.classList.toggle("text-zinc-200", !isLight);
+            toggle.classList.toggle("border-zinc-300", isLight);
+            toggle.classList.toggle("bg-zinc-100/80", isLight);
+            toggle.classList.toggle("text-zinc-800", isLight);
+            toggle.setAttribute("title", isLight ? "Switch to dark mode" : "Switch to light mode");
+            toggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+          }
+
+          darkIcon?.classList.toggle("hidden", isLight);
+          lightIcon?.classList.toggle("hidden", !isLight);
+        };
+
+        paint();
+
+        toggle?.addEventListener("click", () => {
+          const isLight = root.classList.toggle("light");
+          localStorage.setItem("theme", isLight ? "light" : "dark");
+          paint();
+        });
+      })();
+    </script>
+  </body>
+</html>

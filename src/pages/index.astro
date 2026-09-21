@@ -1,0 +1,226 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { projectCategories } from "../data/projects";
+
+const projectCount = projectCategories.reduce((n, category) => n + category.projects.length, 0);
+
+const statusStyles = {
+  Active: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300",
+  "On hold": "border-amber-500/40 bg-amber-500/10 text-amber-300",
+  Complete: "border-zinc-600 bg-zinc-800/60 text-zinc-400",
+  Dropped: "border-rose-500/40 bg-rose-500/10 text-rose-300",
+};
+---
+
+<Layout title="Snxhit | Systems & Graphics Developer">
+  <section id="home" class="mb-12 mt-4">
+    <div class="max-w-4xl">
+      <p class="eyebrow mb-4 inline-flex rounded-md border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 font-mono text-xs text-emerald-300">
+        open-source / OS Dev / compilers / network protocols
+      </p>
+      <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+        Building Open-Source
+        <span class="hero-gradient inline-block">Systems</span>
+      </h1>
+      <p class="lead mt-5 max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg">
+        Systems & graphics developer writing Rust and Go — compilers, custom shaders, network
+        protocols, and OS kernels, all shipped in the open.
+      </p>
+      <ul class="mt-7 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
+        <li class="text-sm text-zinc-300 sm:text-base">Systems & Graphics Developer.</li>
+        <li class="text-sm text-zinc-300 sm:text-base">Writing code in Rust and Go.</li>
+        <li class="text-sm text-zinc-300 sm:text-base">
+          Actively building compilers, custom shaders, network protocols, and OS kernels.
+        </li>
+        <li class="text-sm text-zinc-300 sm:text-base">
+          Passionate about open-source contributions and low-level architecture.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects" class="index-frame index-frame-interactive overflow-hidden">
+    <div class="border-b border-zinc-800/90 px-4 py-3 sm:px-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h2 class="font-mono text-sm font-semibold uppercase tracking-wider text-zinc-200">
+            [ Project Index ]
+          </h2>
+          <p class="mt-1 text-xs text-zinc-400">
+            {projectCount} public projects · updated on GitHub
+          </p>
+        </div>
+        <a
+          href="https://github.com/Snxhit"
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center gap-1 rounded-md border border-zinc-700 px-2.5 py-1 font-mono text-xs text-zinc-300 transition-colors hover:border-emerald-400 hover:text-emerald-300"
+        >
+          github ↗
+        </a>
+      </div>
+    </div>
+
+    <div class="divide-y divide-zinc-800/80">
+      {projectCategories.map((category) => (
+        <article id={category.key} class="px-4 py-4 sm:px-6">
+          <h3 class="mb-3 flex items-center gap-2 font-mono text-sm font-semibold text-emerald-300">
+            <span>[{category.title}]</span>
+            <span class="rounded border border-zinc-700/70 bg-zinc-800/60 px-1.5 py-0.5 text-[10px] text-zinc-400">
+              {category.projects.length}
+            </span>
+          </h3>
+
+          <div class="space-y-2">
+            {category.projects.map((project) => (
+              <div class="rounded-lg border border-zinc-800/80 bg-zinc-900/55 px-3 py-3 transition-colors hover:border-zinc-600">
+                <div class="flex flex-wrap items-start justify-between gap-3">
+                  <div class="min-w-0 flex-1">
+                    <a
+                      href={`/projects/${project.slug}`}
+                      class="font-semibold text-zinc-100 underline-offset-4 hover:text-emerald-300 hover:underline"
+                    >
+                      {project.name}
+                    </a>
+                    <p class="mt-1 text-xs font-mono text-zinc-400">{project.tagline}</p>
+
+                    <div class="mt-2 flex flex-wrap gap-1.5">
+                      {project.stack.map((tech) => (
+                        <span class="rounded border border-zinc-700/80 bg-zinc-800/80 px-2 py-0.5 font-mono text-[11px] text-zinc-200">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p class="mt-2 text-sm text-zinc-300">{project.summary}</p>
+                  </div>
+
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span
+                      class={`rounded border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wide ${statusStyles[project.status] ?? statusStyles.Complete}`}
+                    >
+                      {project.status}
+                    </span>
+                    <a
+                      href={`/projects/${project.slug}`}
+                      class="inline-flex h-8 items-center justify-center rounded-md border border-zinc-700 px-2 text-xs font-mono text-zinc-300 hover:border-emerald-400 hover:text-emerald-300"
+                      aria-label={`Open details page for ${project.name}`}
+                    >
+                      info
+                    </a>
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-700 text-zinc-300 hover:border-emerald-400 hover:text-emerald-300"
+                        aria-label={`Open live project for ${project.name}`}
+                      >
+                        ↗
+                      </a>
+                    )}
+                    {project.repo && (
+                      <a
+                        href={project.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-700 text-zinc-300 hover:border-emerald-400 hover:text-emerald-300"
+                        aria-label={`Open source code for ${project.name}`}
+                      >
+                        &lt;/&gt;
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style is:global>
+  .hero-gradient {
+    background-image: linear-gradient(90deg, #34d399, #5eead4, #34d399);
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: hero-gradient-shift 5s linear infinite;
+  }
+
+  @keyframes hero-gradient-shift {
+    from {
+      background-position: 0% center;
+    }
+    to {
+      background-position: -200% center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-gradient {
+      animation: none;
+    }
+  }
+
+  html.light #home h1 {
+    color: rgb(24 24 27);
+  }
+
+  html.light #home h1 span {
+    background-image: linear-gradient(90deg, rgb(5 150 105), rgb(13 148 136), rgb(5 150 105));
+  }
+
+  html.light #home li {
+    color: rgb(63 63 70);
+  }
+
+  html.light #home .lead {
+    color: rgb(63 63 70);
+  }
+
+  html.light #home .eyebrow {
+    color: rgb(4 120 87);
+    border-color: rgb(5 150 105 / 0.4);
+  }
+
+  html.light #projects .border-b,
+  html.light #projects .divide-y > * + * {
+    border-color: rgb(212 212 216 / 0.8);
+  }
+
+  html.light #projects h2 {
+    color: rgb(39 39 42);
+  }
+
+  html.light #projects p {
+    color: rgb(82 82 91);
+  }
+
+  html.light #projects .border-b a {
+    border-color: rgb(212 212 216 / 0.8);
+    background-color: rgb(228 228 231 / 0.8);
+  }
+
+  html.light #projects h3 {
+    color: rgb(5 150 105);
+  }
+
+  html.light #projects .rounded-lg {
+    border-color: rgb(212 212 216 / 0.8);
+    background-color: rgb(244 244 245 / 0.9);
+  }
+
+  html.light #projects a,
+  html.light #projects span {
+    color: rgb(39 39 42);
+  }
+
+  html.light #projects span {
+    border-color: rgb(212 212 216 / 0.8);
+    background-color: rgb(228 228 231 / 0.8);
+  }
+</style>

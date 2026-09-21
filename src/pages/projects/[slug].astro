@@ -1,0 +1,136 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { allProjects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return allProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.name} | Project Case Study`}>
+  <article class="space-y-6">
+    <nav class="text-xs font-mono text-zinc-400">
+      <a href="/#projects" class="hover:text-emerald-400">home</a>
+      <span class="mx-1">/</span>
+      <span>projects</span>
+      <span class="mx-1">/</span>
+      <span>{project.slug}</span>
+    </nav>
+
+    <section class="index-frame index-frame-interactive overflow-hidden">
+      <div class="border-b border-zinc-800/90 px-4 py-4 sm:px-6">
+        <p class="text-xs font-mono text-emerald-300">[{project.category.title}]</p>
+        <h1 class="mt-1 text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl">{project.name}</h1>
+        <p class="mt-2 text-sm text-zinc-300">{project.summary}</p>
+      </div>
+
+      <div class="space-y-5 px-4 py-4 sm:px-6">
+        <div>
+          <h2 class="text-xs font-mono uppercase tracking-wide text-zinc-400">Project Overview</h2>
+          <p class="mt-2 text-sm leading-relaxed text-zinc-300">{project.overview}</p>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            {project.stack.map((tech) => (
+              <span class="rounded border border-zinc-700/80 bg-zinc-800/80 px-2 py-0.5 font-mono text-[11px] text-zinc-200">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div class="border-t border-zinc-800/90 pt-5">
+          <h2 class="text-xs font-mono uppercase tracking-wide text-zinc-400">Links & Status</h2>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:border-emerald-400 hover:text-emerald-300"
+              >
+                Source Code
+              </a>
+            )}
+            {project.live && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center rounded-md border border-zinc-700 px-3 py-1.5 text-sm text-zinc-200 hover:border-emerald-400 hover:text-emerald-300"
+              >
+                Live Demo
+              </a>
+            )}
+            {!project.repo && !project.live && (
+              <p class="text-xs font-mono text-zinc-500">not open-sourced yet</p>
+            )}
+          </div>
+          <p class="mt-4 text-xs font-mono text-zinc-500">status: {project.status}</p>
+        </div>
+      </div>
+    </section>
+
+    {project.highlights?.length > 0 || project.architecture?.length > 0 && (
+      <section class="grid gap-4 sm:grid-cols-2">
+        {project.highlights?.length > 0 && (
+          <div class="index-frame index-frame-interactive overflow-hidden">
+            <div class="border-b border-zinc-800/90 px-4 py-3">
+              <h2 class="font-mono text-xs uppercase tracking-wide text-zinc-300">Highlights</h2>
+            </div>
+            <ul class="space-y-2 px-4 py-4 text-sm text-zinc-300">
+              {project.highlights.map((item) => (
+                <li>• {item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {project.architecture?.length > 0 && (
+          <div class="index-frame index-frame-interactive overflow-hidden">
+            <div class="border-b border-zinc-800/90 px-4 py-3">
+              <h2 class="font-mono text-xs uppercase tracking-wide text-zinc-300">Architecture Notes</h2>
+            </div>
+            <ul class="space-y-2 px-4 py-4 text-sm text-zinc-300">
+              {project.architecture.map((item) => (
+                <li>• {item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
+    )}
+  </article>
+</Layout>
+
+<style is:global>
+  html.light article .border-b,
+  html.light article .border-t {
+    border-color: rgb(212 212 216 / 0.8);
+  }
+
+  html.light article h1 {
+    color: rgb(24 24 27);
+  }
+
+  html.light article p,
+  html.light article li,
+  html.light article h2,
+  html.light article nav,
+  html.light article span {
+    color: rgb(63 63 70);
+  }
+
+  html.light article .rounded-lg,
+  html.light article .index-frame {
+    border-color: rgb(212 212 216 / 0.8);
+    background-color: rgb(244 244 245 / 0.9);
+  }
+
+  html.light article a {
+    color: rgb(39 39 42);
+  }
+</style>

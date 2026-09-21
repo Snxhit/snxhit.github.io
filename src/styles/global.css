@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  .light {
+    color-scheme: light;
+  }
+
+  html,
+  body {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-zinc-950 text-zinc-100 font-sans antialiased selection:bg-emerald-500/30 selection:text-zinc-50;
+  }
+
+  html.light body {
+    @apply bg-zinc-100 text-zinc-900 selection:bg-emerald-500/20 selection:text-zinc-900;
+  }
+}
+
+@layer components {
+  .glass-dark {
+    @apply bg-zinc-950/80 backdrop-blur-md;
+  }
+
+  .glass-light {
+    @apply bg-zinc-100/80 backdrop-blur-md;
+  }
+
+  .index-frame {
+    @apply rounded-xl border border-zinc-800/90 bg-zinc-950/70 shadow-soft transition-all duration-200;
+  }
+
+  .index-frame-interactive {
+    @apply hover:-translate-y-0.5 hover:border-zinc-700/90 hover:shadow-xl;
+  }
+
+  html.light .index-frame {
+    @apply border-zinc-300/90 bg-zinc-50/70;
+  }
+
+  html.light .index-frame-interactive {
+    @apply hover:border-zinc-400/90;
+  }
+
+  html.light [data-theme-logo] {
+    @apply bg-zinc-900/75;
+  }
+
+  html.light [data-theme-nav] a {
+    @apply text-zinc-700;
+  }
+
+  html.light [data-theme-nav] a:hover {
+    @apply text-emerald-600;
+  }
+}
